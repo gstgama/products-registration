@@ -8,8 +8,7 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Name</th>
+          <th scope="col">Product</th>
           <th scope="col">Category</th>
           <th scope="col">Price</th>
           <th scope="col">Action</th>
@@ -17,10 +16,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let product of products">
-          <th scope="row">{{product.id}}</th>
           <td>{{product.name}}</td>
           <td>{{product.category}}</td>
-          <td>{{product.price}}</td>
+          <td>${{product.price}}</td>
           <td><button class="ms-1"><i class="fa-solid fa-trash"></i></button></td>
         </tr>
       </tbody>
