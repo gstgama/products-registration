@@ -1,9 +1,15 @@
 <div class="row justify-content-center mt-4">
-  <div class="col-8">
+  <div class="col-11 col-sm-11 col-md-10 col-lg-8">
 
-    <h2>Products Registration</h2>
-
-    <button>+ Product</button>
+    <div class="row">
+      <div class="col">
+        <h3>Products Registration</h3>
+      </div>
+      <div class="col-3">
+        <button (click)="openModal(template)" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i><b>
+            NEW</b></button>
+      </div>
+    </div>
 
     <table class="table table-striped">
       <thead>
@@ -19,10 +25,53 @@
           <td>{{product.name}}</td>
           <td>{{product.category}}</td>
           <td>${{product.price}}</td>
-          <td><button class="ms-1"><i class="fa-solid fa-trash"></i></button></td>
+          <td><button class="btn btn-danger ms-1"><i class="fa-solid fa-trash-can"></i></button></td>
         </tr>
       </tbody>
     </table>
+
+    <ng-template #template>
+
+      <div class="row p-4 pt-0">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left text-primary">New product</h4>
+          <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+          </button>
+        </div>
+
+        <form [formGroup]="form">
+          <div class="form-group mb-2 mt-2">
+            <label for="product" class="form-label">Product</label>
+            <input type="text" id="product" class="form-control" placeholder="Sofa"
+              [ngClass]="{'is-invalid': product.invalid && product.touched}" formControlName="product">
+            <div *ngIf="(product.invalid && product.touched) || product.dirty">
+              <small *ngIf="product.errors?.required" class="text-danger">Product is mandatory</small>
+            </div>
+          </div>
+          <div class="form-group mb-2">
+            <label for="category" class="form-label">Category</label>
+            <input type="text" id="category" class="form-control" placeholder="Forniture"
+              [ngClass]="{'is-invalid': category.invalid && category.touched}" formControlName="category">
+            <div *ngIf="(category.invalid && category.touched) || category.dirty">
+              <small *ngIf="category.errors?.required" class="text-danger">Category is mandatory</small>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="price" id="price" class="form-control" placeholder="220.00"
+              [ngClass]="{'is-invalid': price.invalid && price.touched}" formControlName="price">
+            <div *ngIf="(price.invalid && price.touched) || price.dirty">
+              <small *ngIf="price.errors?.required" class="text-danger">Price is mandatory</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" (click)="openModal(template)">Register</button>
+          </div>
+        </form>
+      </div>
+
+    </ng-template>
 
   </div>
 </div>

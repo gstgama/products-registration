@@ -1,5 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Product } from '../models/product';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -8,16 +11,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
 
-  products: any;
+  products!: Product[];
+  form!: FormGroup;
+  modalRef?: BsModalRef;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private service: ProductService,
+    private modalService: BsModalService,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.getProducts();
+    this.getAllProducts();
+
+    this.form = this.fb.group({
+      product: ['', Validators.required],
+      category: ['', Validators.required],
+      price: ['', Validators.required]
+    });
   }
 
-  getProducts(): void {
-    this.http.get('https://localhost:5001/api/product').subscribe(
+  get product(): any {
+    return this.form.get('product');
+  }
+
+  get category(): any {
+    return this.form.get('category');
+  }
+
+  get price(): any {
+    return this.form.get('price');
+  }
+
+  getAllProducts(): void {
+    this.service.getAllProducts().subscribe(
       (data: any) => {
         console.log(data);
         this.products = data;
@@ -26,6 +52,10 @@ export class ProductsComponent implements OnInit {
         console.error(error);
       }
     ).add();
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 
 }
