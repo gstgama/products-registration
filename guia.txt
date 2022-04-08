@@ -16,3 +16,15 @@ Objeto PRODUTO:
 - Categoria
 - Preço
 
+
+
+Fazer:
+
+IGeralPersist
+GeralPersist
+
+Persistence -> Application -> Controller
+
+GetAll
+Add
+Delete
