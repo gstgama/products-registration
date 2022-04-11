@@ -18,4 +18,16 @@ export class ProductService {
       .pipe(take(1));
   }
 
+  post(product: Product): Observable<Product> {
+    return this.http
+      .post<Product>(this.baseURL, product)
+      .pipe(take(1));
+  }
+
+  delete(productId: number): Observable<any> {
+    return this.http
+      .delete(`${this.baseURL}/${productId}`)
+      .pipe(take(1));
+  }
+
 }

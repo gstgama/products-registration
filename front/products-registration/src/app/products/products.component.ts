@@ -1,6 +1,8 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { Product } from '../models/product';
 import { ProductService } from '../services/product.service';
 
@@ -18,7 +20,9 @@ export class ProductsComponent implements OnInit {
   constructor(
     private service: ProductService,
     private modalService: BsModalService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -52,6 +56,10 @@ export class ProductsComponent implements OnInit {
         console.error(error);
       }
     ).add();
+  }
+
+  addProduct(): void {
+    this.spinner.show();
   }
 
   openModal(template: TemplateRef<any>) {
