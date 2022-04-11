@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Application.Contracts;
 using API.Persistence;
+using API.Persistence.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +36,12 @@ namespace API
 
       services.AddCors();
       services.AddControllers();
+
+      services.AddScoped<IProductService, ProductService>();
+
+      services.AddScoped<IProductPersist, ProductPersist>();
+      services.AddScoped<IGeneralPersist, GeneralPersist>();
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });

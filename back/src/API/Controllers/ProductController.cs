@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Persistence;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using API.Application.Contracts;
 
 namespace API.Controllers
 {
@@ -13,38 +13,62 @@ namespace API.Controllers
   [Route("api/[controller]")]
   public class ProductController : ControllerBase
   {
-    private readonly ProductContext _context; //Tiar tudo que for camada de persistence
-    public ProductController(ProductContext context)
+    private readonly IProductService _productService;
+    public ProductController(IProductService productService)
     {
-      _context = context;
+      _productService = productService;
     }
-
-    public IEnumerable<Product> product = new Product[] {
-        new Product(){
-        Id = 1,
-        Name = "Bateria",
-        Category = "Office",
-        Price = 33.12
-      },
-        new Product(){
-          Id = 2,
-          Name = "Bateria 2",
-          Category = "Office 2",
-          Price = 66.12
-        }
-      };
 
     [HttpGet]
-    public IEnumerable<Product> GetAll()
+    public async Task<IActionResult> GetAll()
     {
-      return _context.Products;
+      try
+      {
+        var products = await _productService.GetAllProductsAsync();
+        if (products == null) return NoContent();
+
+        return Ok(products);
+      }
+      catch (Exception ex)
+      {
+        throw new Exception(ex.Message);
+      }
     }
 
-    [HttpGet("{id}")]
-    public Product GetById(int id)
+    [HttpPost]
+    public async Task<IActionResult> Post(Product model)
     {
-      return _context.Products.FirstOrDefault(data => data.Id == id);
+      try
+      {
+        var product = await _productService.AddProduct(model);
+        if (product == null) return NoContent();
+
+        return Ok(product);
+      }
+      catch (Exception ex)
+      {
+        throw new Exception(ex.Message);
+      }
     }
 
+    [HttpDelete("{productId}")]
+    public async Task<IActionResult> Delete(int productId)
+    {
+      try
+      {
+        var product = await _productService.GetProductByIdAsync(productId);
+        if (product == null) return NoContent();
+
+        return await _productService.DeleteProduct(productId)
+        ? Ok(new { message = "Product has been deleted." })
+        : throw new Exception("An unespecified error ocurred trying to delete this product.");
+
+
+      }
+      catch (Exception ex)
+      {
+        throw new Exception(ex.Message);
+      }
+    }
   }
 }
