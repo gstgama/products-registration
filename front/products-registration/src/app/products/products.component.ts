@@ -113,7 +113,7 @@ export class ProductsComponent implements OnInit {
   }
 
   openNewModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
   openDeleteModal(template: TemplateRef<any>, event: any, productId: number, productName: string, productCategory: string): void {
