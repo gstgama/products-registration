@@ -3,7 +3,7 @@
 
     <div class="row">
       <div class="col">
-        <h1>Products Registration</h1>
+        <h2>Products Registration</h2>
       </div>
     </div>
 
@@ -29,11 +29,11 @@
     </table> -->
 
     <div class="row">
-      <div class="col-7 search-container">
+      <div class="col-3 search-container">
         <!-- <mat-form-field appearance="fill">
         <input matInput placeholder="Category" autocomplete="off" (keyup)="filterData($event)">
       </mat-form-field> -->
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="legacy">
           <mat-label>Filter by category</mat-label>
           <mat-select (selectionChange)="onChange($event)">
             <mat-option value="forniture">Forniture</mat-option>
@@ -42,8 +42,8 @@
         </mat-form-field>
       </div>
 
-      <div class="col-3 mt-2 ms-5">
-        <button (click)="openNewModal(new)" class="btn btn-primary btn-md"><i class="fa-solid fa-plus"></i><b>
+      <div class="col-3 col-sm-2 offset-6 offset-sm-7 mt-2">
+        <button (click)="openNewModal(new)" mat-button color="primary"><i class="fa-solid fa-plus"></i><b>
             NEW</b></button>
       </div>
 
@@ -52,7 +52,7 @@
     <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
+        <th class="centre" mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
 
@@ -68,9 +68,11 @@
 
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action </th>
-        <td mat-cell *matCellDef="let element"> <button class="btn btn-danger ms-1"
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="warn"
             (click)="openDeleteModal(delete, $event, element.id, element.name, element.category)"><i
-              class="fa-solid fa-trash-can"></i></button> </td>
+              class="fa-solid fa-trash-can"></i></button>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
