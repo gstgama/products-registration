@@ -3,15 +3,11 @@
 
     <div class="row">
       <div class="col">
-        <h3>Products Registration</h3>
-      </div>
-      <div class="col-3">
-        <button (click)="openNewModal(new)" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i><b>
-            NEW</b></button>
+        <h1>Products Registration</h1>
       </div>
     </div>
 
-    <table class="table table-striped">
+    <!-- <table class="table table-striped">
       <thead>
         <tr>
           <th scope="col">Name</th>
@@ -30,7 +26,59 @@
                 class="fa-solid fa-trash-can"></i></button></td>
         </tr>
       </tbody>
+    </table> -->
+
+    <div class="row">
+      <div class="col-7 search-container">
+        <!-- <mat-form-field appearance="fill">
+        <input matInput placeholder="Category" autocomplete="off" (keyup)="filterData($event)">
+      </mat-form-field> -->
+        <mat-form-field appearance="fill">
+          <mat-label>Filter by category</mat-label>
+          <mat-select (selectionChange)="onChange($event)">
+            <mat-option value="forniture">Forniture</mat-option>
+            <mat-option value="teste">Teste</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-3 mt-2 ms-5">
+        <button (click)="openNewModal(new)" class="btn btn-primary btn-md"><i class="fa-solid fa-plus"></i><b>
+            NEW</b></button>
+      </div>
+
+    </div>
+
+    <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef> Category </th>
+        <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element"> <button class="btn btn-danger ms-1"
+            (click)="openDeleteModal(delete, $event, element.id, element.name, element.category)"><i
+              class="fa-solid fa-trash-can"></i></button> </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+
+    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]">
+    </mat-paginator>
 
     <ng-template #delete>
       <div class="modal-body text-center">
