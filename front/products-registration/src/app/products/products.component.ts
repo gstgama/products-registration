@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Product } from '../models/product';
 import { ProductService } from '../services/product.service';
 import * as _ from 'lodash';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-products',
@@ -27,6 +28,8 @@ export class ProductsComponent implements OnInit {
 
   productModel!: Product;
   products!: Product[];
+  categories: any[] = [];
+  uniqCategories: any[] = [];
   form!: FormGroup;
   modalRef?: BsModalRef;
 
@@ -75,11 +78,15 @@ export class ProductsComponent implements OnInit {
   }
 
   getAllProducts(): void {
-    this.spinner.show();
-
     this.service.getAllProducts().subscribe(
       (data: any) => {
         this.products = data;
+
+        for (let i = 0; i < this.products.length; i++) {
+          let firstLetterCapitalized = data[i].category.substr(0, 1).toUpperCase();
+          this.categories[i] = firstLetterCapitalized + data[i].category.substr(1);
+        }
+        this.uniqCategories = _.uniq(this.categories);
 
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
@@ -143,6 +150,9 @@ export class ProductsComponent implements OnInit {
 
   decline(): void {
     this.modalRef?.hide();
+    setTimeout(() => {
+      this.form.reset();
+    }, 500);
   }
 
 }
