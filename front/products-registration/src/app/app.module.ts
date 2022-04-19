@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { ProductsComponent } from './products/products.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgxSpinnerModule } from 'ngx-spinner'
 import { ToastrModule } from 'ngx-toastr';
 
 import { MatTableModule } from '@angular/material/table';
@@ -35,7 +34,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     HttpClientModule,
     FontAwesomeModule,
     ModalModule.forRoot(),
-    NgxSpinnerModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',

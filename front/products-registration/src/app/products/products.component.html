@@ -7,27 +7,6 @@
       </div>
     </div>
 
-    <!-- <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Category</th>
-          <th scope="col">Price</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of products">
-          <td>{{product.name}}</td>
-          <td>{{product.category}}</td>
-          <td>${{product.price}}</td>
-          <td><button class="btn btn-danger ms-1"
-              (click)="openDeleteModal(delete, $event, product.id, product.name, product.category)"><i
-                class="fa-solid fa-trash-can"></i></button></td>
-        </tr>
-      </tbody>
-    </table> -->
-
     <div class="row">
       <div class="col-3 search-container">
         <!-- <mat-form-field appearance="fill">
@@ -53,7 +32,6 @@
     </div>
 
     <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
-
       <ng-container matColumnDef="name">
         <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
@@ -82,14 +60,14 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]">
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[10, 15, 20, 50, 100]">
     </mat-paginator>
 
     <ng-template #delete>
       <div class="modal-body text-center">
         <p>Are you sure to delete ({{ productName }} - {{ productCategory }}) ?</p>
-        <button type="button" mat-raised-button color="warn" (click)="confirm()">Yes, I am</button>
-        <button type="button" mat-raised-button color="primary" class="ms-1" (click)="decline()">No, I'm not</button>
+        <button type="button" mat-button color="warn" (click)="confirm()">Yes, I am</button>
+        <button type="button" mat-button color="primary" class="ms-1" (click)="decline()">No, I'm not</button>
       </div>
     </ng-template>
 
@@ -106,7 +84,7 @@
               <mat-hint *ngIf="(name.invalid && name.touched) || name.dirty">
                 <p *ngIf="name.errors?.required">Name is mandatory</p>
                 <p *ngIf="name.errors?.minlength">Minimum is 3 characters</p>
-                <p *ngIf="name.errors?.maxlength">Maximum is 20 characters</p>
+                <p *ngIf="name.errors?.maxlength">Maximum is 25 characters</p>
               </mat-hint>
             </mat-form-field>
           </div>
@@ -119,7 +97,7 @@
               <mat-hint *ngIf="(category.invalid && category.touched) || category.dirty">
                 <p *ngIf="category.errors?.required">Category is mandatory</p>
                 <p *ngIf="category.errors?.minlength">Minimum is 3 characters</p>
-                <p *ngIf="category.errors?.maxlength">Maximum is 15 characters</p>
+                <p *ngIf="category.errors?.maxlength">Maximum is 25 characters</p>
               </mat-hint>
             </mat-form-field>
           </div>
@@ -145,37 +123,6 @@
         <button type="submit" [disabled]="form.status === 'INVALID'" mat-raised-button color="primary" class="ms-2"
           (click)="addProduct()">Register</button>
       </mat-dialog-actions>
-
-      <!-- <div class="form-group mb-2 mt-2">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" id="name" class="form-control" placeholder="Sofa"
-              [ngClass]="{'is-invalid': name.invalid && name.touched}" formControlName="name">
-            <div *ngIf="(name.invalid && name.touched) || name.dirty">
-              <small *ngIf="name.errors?.required" class="text-danger">Name is mandatory</small>
-            </div>
-          </div> -->
-
-      <!-- <div class="form-group mb-2">
-            <label for="category" class="form-label">Category</label>
-            <input type="text" id="category" class="form-control" placeholder="Forniture"
-              [ngClass]="{'is-invalid': category.invalid && category.touched}" formControlName="category">
-            <div *ngIf="(category.invalid && category.touched) || category.dirty">
-              <small *ngIf="category.errors?.required" class="text-danger">Category is mandatory</small>
-            </div>
-          </div> -->
-
-      <!-- <div class="form-group mb-3">
-            <label for="price" class="form-label">Price</label>
-            <input type="price" id="price" class="form-control" placeholder="220.00"
-              [ngClass]="{'is-invalid': price.invalid && price.touched}" formControlName="price">
-            <div *ngIf="(price.invalid && price.touched) || price.dirty">
-              <small *ngIf="price.errors?.required" class="text-danger">Price is mandatory</small>
-            </div>
-          </div> -->
-
-
-
-      <!-- </div> -->
     </ng-template>
 
   </div>

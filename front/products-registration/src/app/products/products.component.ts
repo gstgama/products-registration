@@ -4,12 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../models/product';
 import { ProductService } from '../services/product.service';
 import * as _ from 'lodash';
-import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-products',
@@ -41,7 +39,6 @@ export class ProductsComponent implements OnInit {
     private service: ProductService,
     private modalService: BsModalService,
     private fb: FormBuilder,
-    private spinner: NgxSpinnerService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -51,11 +48,11 @@ export class ProductsComponent implements OnInit {
       name: ['', [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(20)]],
+        Validators.maxLength(35)]],
       category: ['', [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(15)]],
+        Validators.maxLength(35)]],
       price: ['', [
         Validators.required,
         Validators.max(99999999)]]
@@ -74,9 +71,9 @@ export class ProductsComponent implements OnInit {
     return this.form.get('price');
   }
 
-  filterData($event: any) {
-    this.dataSource.filter = $event.target.value;
-  }
+  // filterData($event: any) {
+  //   this.dataSource.filter = $event.target.value;
+  // }
 
   onChange($event: any) {
     let filterData = _.filter(this.apiResponse, (item) => {
@@ -89,7 +86,6 @@ export class ProductsComponent implements OnInit {
     this.service.getAllProducts().subscribe(
       (data: any) => {
         this.products = data;
-
         for (let i = 0; i < this.products.length; i++) {
           let firstLetterCapitalized = data[i].category.substr(0, 1).toUpperCase();
           this.categories[i] = firstLetterCapitalized + data[i].category.substr(1);
