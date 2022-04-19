@@ -101,10 +101,12 @@
           <div class="form-group mb-2">
             <mat-form-field appearance="legacy">
               <mat-label for="name">Name</mat-label>
-              <input matInput [ngClass]="{'is-invalid': name.invalid && name.touched}" type="text" id="name"
-                formControlName="name">
+              <input matInput placeholder="Sofa" [ngClass]="{'is-invalid': name.invalid && name.touched}" type="text"
+                id="name" formControlName="name">
               <mat-hint *ngIf="(name.invalid && name.touched) || name.dirty">
                 <p *ngIf="name.errors?.required">Name is mandatory</p>
+                <p *ngIf="name.errors?.minlength">Minimum is 3 characters</p>
+                <p *ngIf="name.errors?.maxlength">Maximum is 20 characters</p>
               </mat-hint>
             </mat-form-field>
           </div>
@@ -112,10 +114,12 @@
           <div class="form-group mb-2">
             <mat-form-field appearance="legacy">
               <mat-label for="category">Category</mat-label>
-              <input matInput [ngClass]="{'is-invalid': category.invalid && category.touched}" type="text" id="category"
-                formControlName="category">
+              <input matInput placeholder="Forniture" [ngClass]="{'is-invalid': category.invalid && category.touched}"
+                type="text" id="category" formControlName="category">
               <mat-hint *ngIf="(category.invalid && category.touched) || category.dirty">
                 <p *ngIf="category.errors?.required">Category is mandatory</p>
+                <p *ngIf="category.errors?.minlength">Minimum is 3 characters</p>
+                <p *ngIf="category.errors?.maxlength">Maximum is 15 characters</p>
               </mat-hint>
             </mat-form-field>
           </div>
@@ -123,10 +127,11 @@
           <div class="form-group mb-2">
             <mat-form-field appearance="legacy">
               <mat-label for="price">Price</mat-label>
-              <input matInput [ngClass]="{'is-invalid': price.invalid && price.touched}" type="number" id="price"
-                formControlName="price">
+              <input matInput placeholder="99.99" [ngClass]="{'is-invalid': price.invalid && price.touched}"
+                type="number" id="price" formControlName="price">
               <mat-hint *ngIf="(price.invalid && price.touched) || price.dirty">
                 <p *ngIf="price.errors?.required">Price is mandatory</p>
+                <p *ngIf="price.errors?.max">Maximum is 15 characters</p>
               </mat-hint>
             </mat-form-field>
           </div>

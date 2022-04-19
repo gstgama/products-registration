@@ -48,9 +48,17 @@ export class ProductsComponent implements OnInit {
     this.getAllProducts();
 
     this.form = this.fb.group({
-      name: ['', Validators.required],
-      category: ['', Validators.required],
-      price: ['', Validators.required]
+      name: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20)]],
+      category: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(15)]],
+      price: ['', [
+        Validators.required,
+        Validators.max(99999999)]]
     });
   }
 
@@ -86,7 +94,7 @@ export class ProductsComponent implements OnInit {
           let firstLetterCapitalized = data[i].category.substr(0, 1).toUpperCase();
           this.categories[i] = firstLetterCapitalized + data[i].category.substr(1);
         }
-        this.uniqCategories = _.uniq(this.categories);
+        this.uniqCategories = _.uniq(_.orderBy(this.categories));
 
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
@@ -104,7 +112,7 @@ export class ProductsComponent implements OnInit {
       this.productModel = { ... this.form.value };
       this.service.post(this.productModel).subscribe(
         () => {
-          this.toastr.success("Product registrated with success", "Success");
+          this.toastr.success("Product has been registrared", "Success");
           this.modalService.hide();
           setTimeout(() => {
             this.form.reset();
@@ -113,7 +121,7 @@ export class ProductsComponent implements OnInit {
         },
         (error: any) => {
           console.error(error);
-          this.toastr.error("An error happened", "Error!");
+          this.toastr.error("An error has occorrured", "Error!");
         }
       ).add();
     }
