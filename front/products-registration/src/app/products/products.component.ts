@@ -20,16 +20,16 @@ export class ProductsComponent implements OnInit {
   @ViewChild('paginator') paginator!: MatPaginator;
   @ViewChild(MatSort) matSort!: MatSort;
 
-  displayedColumns: any = ['name', 'category', 'price', 'action'];
   dataSource!: MatTableDataSource<any>;
-  apiResponse!: Product[];
+  displayedColumns: any = ['name', 'category', 'price', 'action'];
 
-  productModel!: Product;
-  products!: Product[];
-  categories: any[] = [];
-  uniqCategories: any[] = [];
   form!: FormGroup;
   modalRef?: BsModalRef;
+  products!: Product[];
+  productModel!: Product;
+
+  categories: any = [];
+  uniqCategories: any = [];
 
   productId!: number;
   productName!: string;
@@ -59,7 +59,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  get name(): any { //"productt" because already exists a "product" AQUI É O BACKUP ASOKDOSAKDOASK
+  get name(): any {
     return this.form.get('name');
   }
 
@@ -77,7 +77,7 @@ export class ProductsComponent implements OnInit {
 
   onChange($event: any) {
     if ($event.value.toLowerCase() !== 'all') {
-      let filterData = _.filter(this.apiResponse, (item) => {
+      let filterData = _.filter(this.products, (item) => {
         return item.category.toLowerCase() == $event.value.toLowerCase();
       })
       this.dataSource = new MatTableDataSource(filterData);
@@ -95,9 +95,8 @@ export class ProductsComponent implements OnInit {
         this.uniqCategories = _.uniq(_.orderBy(this.categories));
 
         this.dataSource = new MatTableDataSource(data);
-        this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.matSort;
-        this.apiResponse = data;
+        this.dataSource.paginator = this.paginator;
       },
       (error: any) => {
         console.error(error);
