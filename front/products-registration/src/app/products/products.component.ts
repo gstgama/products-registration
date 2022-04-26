@@ -76,10 +76,12 @@ export class ProductsComponent implements OnInit {
   // }
 
   onChange($event: any) {
-    let filterData = _.filter(this.apiResponse, (item) => {
-      return item.category.toLowerCase() == $event.value.toLowerCase();
-    })
-    this.dataSource = new MatTableDataSource(filterData);
+    if ($event.value.toLowerCase() !== 'all') {
+      let filterData = _.filter(this.apiResponse, (item) => {
+        return item.category.toLowerCase() == $event.value.toLowerCase();
+      })
+      this.dataSource = new MatTableDataSource(filterData);
+    }
   }
 
   getAllProducts(): void {
