@@ -8,5 +8,5 @@ Front-end:
 - Material
 
 Back-end(API):
-- .Net Core version version 5.0.2
+- .Net Core version 5.0.2
 - Entity Framework Core version 5.0.2
