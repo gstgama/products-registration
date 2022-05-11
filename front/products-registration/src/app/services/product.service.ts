@@ -18,6 +18,12 @@ export class ProductService {
       .pipe(take(1));
   }
 
+  getProductById(id: number): Observable<Product>{
+    return this.http
+      .get<Product>(`${this.baseURL}/${id}`)
+      .pipe(take(1));
+  }
+
   post(product: Product): Observable<Product> {
     return this.http
       .post<Product>(this.baseURL, product)

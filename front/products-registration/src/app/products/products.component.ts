@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Product } from '../models/product';
 import { ProductService } from '../services/product.service';
 import * as _ from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -21,7 +22,7 @@ export class ProductsComponent implements OnInit {
   @ViewChild(MatSort) matSort!: MatSort;
 
   dataSource!: MatTableDataSource<any>;
-  displayedColumns: any = ['name', 'category', 'price', 'action'];
+  displayedColumns: any = ['name', 'category', 'price', 'detail', 'delete'];
 
   form!: FormGroup;
   modalRef?: BsModalRef;
@@ -39,6 +40,7 @@ export class ProductsComponent implements OnInit {
     private service: ProductService,
     private modalService: BsModalService,
     private fb: FormBuilder,
+    private router: Router,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -158,6 +160,10 @@ export class ProductsComponent implements OnInit {
     setTimeout(() => {
       this.form.reset();
     }, 500);
+  }
+
+  eventoDetail(id: number){
+    this.router.navigate([`products/detail/${id}`]);
   }
 
 }

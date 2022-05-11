@@ -6,6 +6,7 @@ using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using API.Application.Contracts;
+using Microsoft.AspNetCore.Http;
 
 namespace API.Controllers
 {
@@ -32,6 +33,22 @@ namespace API.Controllers
       catch (Exception ex)
       {
         throw new Exception(ex.Message);
+      }
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+      try
+      {
+        var product = await _productService.GetProductByIdAsync(id);
+        if(product == null) return NoContent();
+
+        return Ok(product);
+      }
+      catch (Exception ex)
+      {
+        return this.StatusCode(StatusCodes.Status500InternalServerError, $"Error trying to catch the product. Error: {ex.Message}");
       }
     }
 

@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row justify-content-center mt-4">
+    <div class="col-11 col-sm-11 col-md-10 col-lg-8">
+
+      <h2 mat-dialog-title class="p-3 m-0">Product </h2>
+
+      <mat-dialog-content class="mat-typography p-3 pb-0">
+        <form [formGroup]="form">
+          <div class="form-group mb-2">
+            <mat-form-field appearance="legacy">
+              <mat-label for="name">Name</mat-label>
+              <input matInput placeholder="Sofa" [ngClass]="{'is-invalid': name.invalid && name.touched}" type="text"
+                id="name" formControlName="name">
+              <mat-hint *ngIf="(name.invalid && name.touched) || name.dirty">
+                <p *ngIf="name.errors?.required">Name is mandatory</p>
+                <p *ngIf="name.errors?.minlength">Minimum is 3 characters</p>
+                <p *ngIf="name.errors?.maxlength">Maximum is 25 characters</p>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group mb-2">
+            <mat-form-field appearance="legacy">
+              <mat-label for="category">Category</mat-label>
+              <input matInput placeholder="Forniture" [ngClass]="{'is-invalid': category.invalid && category.touched}"
+                type="text" id="category" formControlName="category">
+              <mat-hint *ngIf="(category.invalid && category.touched) || category.dirty">
+                <p *ngIf="category.errors?.required">Category is mandatory</p>
+                <p *ngIf="category.errors?.minlength">Minimum is 3 characters</p>
+                <p *ngIf="category.errors?.maxlength">Maximum is 25 characters</p>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group mb-2">
+            <mat-form-field appearance="legacy">
+              <mat-label for="price">Price</mat-label>
+              <input matInput placeholder="99.99" [ngClass]="{'is-invalid': price.invalid && price.touched}"
+                type="number" id="price" formControlName="price">
+              <mat-hint *ngIf="(price.invalid && price.touched) || price.dirty">
+                <p *ngIf="price.errors?.required">Price is mandatory</p>
+                <p *ngIf="price.errors?.max">Maximum number is 99999999</p>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-dialog-content>
+
+      <!-- <mat-dialog-actions align="end" class="p-3">
+        <button type="button" mat-raised-button mat-dialog-close (click)="decline()">
+          Cancel
+        </button>
+        <button type="submit" [disabled]="form.status === 'INVALID'" mat-raised-button color="primary" class="ms-2"
+          (click)="addProduct()">Register</button>
+      </mat-dialog-actions> -->
+
+    </div>
+  </div>
+</div>
