@@ -163,7 +163,7 @@ export class ProductsComponent implements OnInit {
   }
 
   eventoDetail(id: number){
-    this.router.navigate([`products/detail/${id}`]);
+    this.router.navigate([`app/detail/${id}`]);
   }
 
 }
