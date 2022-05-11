@@ -31,7 +31,7 @@ namespace API
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddDbContext<ProductContext>(
-        context => context.UseSqlite(Configuration.GetConnectionString("Default"))
+        context => context.UseSqlServer(Configuration.GetConnectionString("Product"))
       );
 
       services.AddCors();

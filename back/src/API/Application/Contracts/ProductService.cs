@@ -34,7 +34,6 @@ namespace API.Application.Contracts
         throw new Exception(ex.Message);
       }
     }
-
     public async Task<bool> DeleteProduct(int productId)
     {
       try
@@ -50,7 +49,6 @@ namespace API.Application.Contracts
         throw new Exception(ex.Message);
       }
     }
-
     public async Task<Product[]> GetAllProductsAsync()
     {
       try
