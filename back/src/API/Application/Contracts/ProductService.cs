@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using API.Models;
+using AutoMapper;
 using API.Persistence.Contracts;
 
 namespace API.Application.Contracts
@@ -9,10 +10,12 @@ namespace API.Application.Contracts
   {
     private readonly IProductPersist _productPersist;
     private readonly IGeneralPersist _generalPersist;
-    public ProductService(IProductPersist productPersist, IGeneralPersist generalPersist)
+    private readonly IMapper _mapper;
+    public ProductService(IProductPersist productPersist, IGeneralPersist generalPersist, IMapper mapper)
     {
       _generalPersist = generalPersist;
       _productPersist = productPersist;
+      _mapper = mapper;
     }
 
     public async Task<Product> AddProduct(Product model)
@@ -27,6 +30,30 @@ namespace API.Application.Contracts
 
           return productReturn;
         }
+        return null;
+      }
+      catch (Exception ex)
+      {
+        throw new Exception(ex.Message);
+      }
+    }
+
+    public async Task<Product> UpdateProduct(int productId, Product model)
+    {
+      try
+      {
+        var product = await _productPersist.GetProductByIdAsync(productId);
+        if(product == null) return null;
+
+        model.Id = product.Id;
+
+        _generalPersist.Update<Product>(model);
+
+        if(await _generalPersist.SaveChangesAsync())
+        {
+          return await _productPersist.GetProductByIdAsync(productId);
+        }
+
         return null;
       }
       catch (Exception ex)

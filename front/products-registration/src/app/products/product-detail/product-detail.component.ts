@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -17,6 +17,7 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private service: ProductService,
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
     private toastr: ToastrService
     ) { }
@@ -69,6 +70,25 @@ export class ProductDetailComponent implements OnInit {
         },
       )
     }
+  }
+
+  updateProduct(){
+    this.product = {id: this.product.id, ... this.form.value};
+
+    this.service.put(this.product).subscribe(
+      () => {
+        this.toastr.success("Product has been updated succesfully", "Success")
+        this.backToList();
+      },
+      (error: any) => {
+        console.error(error);
+        this.toastr.error("Error updating the product", "Error");
+      }
+    )
+  }
+
+  backToList(){
+    this.router.navigate(['app']);
   }
 
 }

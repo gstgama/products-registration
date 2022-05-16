@@ -68,6 +68,22 @@ namespace API.Controllers
       }
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, Product model)
+    {
+      try
+      {
+        var product = await _productService.UpdateProduct(id, model);
+        if(product == null) return NoContent();
+
+        return Ok(product);
+      }
+      catch (Exception ex)
+      {
+        return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tetnar atualizar evento. Erro: {ex}");
+      }
+    }
+
     [HttpDelete("{productId}")]
     public async Task<IActionResult> Delete(int productId)
     {

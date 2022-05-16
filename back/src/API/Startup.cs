@@ -37,6 +37,8 @@ namespace API
       services.AddCors();
       services.AddControllers();
 
+      services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
       services.AddScoped<IProductService, ProductService>();
 
       services.AddScoped<IProductPersist, ProductPersist>();

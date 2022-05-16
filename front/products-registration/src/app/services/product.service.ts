@@ -30,6 +30,12 @@ export class ProductService {
       .pipe(take(1));
   }
 
+  put(product: Product): Observable<Product>{
+    return this.http
+      .put<Product>(`${this.baseURL}/${product.id}`, product)
+      .pipe(take(1));
+  }
+
   delete(productId: number): Observable<any> {
     return this.http
       .delete(`${this.baseURL}/${productId}`)

@@ -4,7 +4,7 @@
   <div class="row justify-content-center mt-4">
     <div class="col-11 col-sm-11 col-md-10 col-lg-8">
 
-      <h2 mat-dialog-title class="p-3 m-0">Product {{product.name}}</h2>
+      <h2 mat-dialog-title class="p-3 m-0">{{product.name}}</h2>
 
       <mat-dialog-content class="mat-typography p-3 pb-0">
         <form [formGroup]="form">
@@ -48,13 +48,13 @@
         </form>
       </mat-dialog-content>
 
-      <!-- <mat-dialog-actions align="end" class="p-3">
-        <button type="button" mat-raised-button mat-dialog-close (click)="decline()">
+      <mat-dialog-actions align="end" class="p-3">
+        <button type="button" mat-raised-button mat-dialog-close (click)="backToList()">
           Cancel
         </button>
         <button type="submit" [disabled]="form.status === 'INVALID'" mat-raised-button color="primary" class="ms-2"
-          (click)="addProduct()">Register</button>
-      </mat-dialog-actions> -->
+          (click)="updateProduct()">Update</button>
+      </mat-dialog-actions>
 
     </div>
   </div>
